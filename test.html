@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang = "ru">
+<head>
+<style>
+body, html {
+	margin: 0;
+	padding: 0;
+	background: #7742f4;
+}
+section {
+	width: 60%;
+	height: 50%;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+.half {
+	position: relative;
+	width: 100%;
+	height: 50%;
+	margin: 0;
+	padding: 0;
+	display: flex;  
+    justify-content: center;
+}
+.question {
+	letter-spacing: 1px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 30px;
+	position: relative;
+	display: flex;
+	text-align: center;
+	color: white;
+	
+}
+.answers_container {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	display: flex;  
+    justify-content: center;
+}
+.answer {
+	width: 16%;
+	height: 25px;
+	margin: 2%;
+	left:50px;
+	padding: 0;
+	text-align: center;
+	letter-spacing: 1px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 15px;
+	color: white;
+	background: #181818;
+	border-radius: 3px;
+	
+}
+</style>
+<script>
+
+	window.onload = function() {
+		var counter_question = 0;
+		var max_answers = 5;
+		var result = 1;
+		var buttons = document.querySelectorAll("div .answer");
+		var question_container = document.querySelector('.question');
+		var questions = [
+		{ question:'Ты дебил?', answers:  [{answer:'Да', delta: -0.1},{answer:'Нет', delta: 0.1}] }, 
+		{ question:'Ты дебил? (1)', answers: [{answer:'Да', delta: -0.1},{answer:'Нет', delta: 0},{answer:'Амлет', delta: 0.1}] }, 
+		{ question:'Ты дебил? (2)', answers: [{answer:'Да', delta: -0.2},{answer:'Нет', delta: -0.1},{answer:'Сука блэт', delta: 0.1}
+		,{answer:'Дебил?', delta:0.2}] },
+		{ question:'Ты дебил? (3)', answers: [{answer:'Да', delta: -0.1},{answer:'Нет', delta: 0.1}] },
+		{ question:'Ты дебил? (4)', answers: [{answer:'Да', delta: -0.1},{answer:'Нет', delta: 0.1}] },
+		{ question:'Ты дебил? (5)', answers: [{answer:'Да', delta: -0.1},{answer:'Нет', delta: 0.1}] },
+		{ question:'Ты дебил? (6)', answers: [{answer:'Да', delta: -0.1},{answer:'Нет', delta: 0.1}] }
+		];
+		var results = [
+					   'Поздравляем, вы дебил.', 
+					   'Поздравляем, вы дебил. (1)', 
+					   'Поздравляем, вы дебил. (2)', 
+					   'Поздравляем, вы дебил. (3)'
+					   ];
+			var buttons_delta = new Array(questions[counter_question].answers.length - 1);
+			for (var k = 0; k < questions[counter_question].answers.length - 1; k++) {
+			buttons_delta[k] = {selector: buttons[k], delta: questions[counter_question].answers[k].delta};
+		}
+			for (var q = 0; q < buttons_delta.length - 1; q++) {
+
+			buttons_delta[q].selector.addEventListener("click", function() {
+				result = result + buttons_delta[q].delta;
+				console.log(result);
+			});
+		}
+			for (var i = 0; i <= buttons.length - 1; i++) {
+				buttons[i].addEventListener('click', function() {
+					counter_question++;
+					init(counter_question, question_container, questions, buttons, result, results);
+				});
+			}
+		
+		
+	
+	}
+	function init(counter, question_cont, questions, buttons, result, results)  {
+		if (counter > questions.length - 1) {
+			if (result < 0) {
+				result = 0;
+			} else if (result > results.length - 1){
+				result = results.length - 1;
+			}
+			question_cont.innerHTML = results[Math.round(result)];
+			for (var i = 0; i <= buttons.length - 1; i++) {
+				buttons[i].style.display = 'none';
+			}
+		} 
+		else {
+			
+		question_cont.innerHTML = questions[counter].question;
+		for (var i = questions[counter].answers.length; i <= buttons.length - 1; i++) buttons[i].style.display = 'none';
+		for (var j = 0; j <= questions[counter].answers.length - 1; j++) buttons[j].innerHTML = questions[counter].answers[j].answer;
+		for (var a = 0; a <= questions[counter].answers.length - 1; a++) buttons[a].style.display = 'block';
+		
+	}
+	
+}
+</script>
+<meta charset = "UTF-8"/>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet" />
+<title>Тест</title>
+</head>
+<body>
+<section>
+  <div class = "half first">
+	<div class = "question">Ты дебил?</div>
+  </div>
+  </div>
+  <div class = "half second">
+   <div class = "answers_container">
+	<div class = "answer">Да</div>
+	<div class = "answer">Нет</div>
+	<div class = "answer" style="display: none;">Омлет</div>
+	<div class = "answer" style="display: none;"></div>
+	<div class = "answer" style="display: none;"></div>
+	</div>
+  </div>
+</body>
+</html>
