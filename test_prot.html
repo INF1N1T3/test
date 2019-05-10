@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang = "ru">
+<head>
+<style>
+body, html {
+	margin: 0;
+	padding: 0;
+	background: #7742f4;
+}
+section {
+	width: 60%;
+	height: 50%;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+.half {
+	position: relative;
+	width: 100%;
+	height: 50%;
+	margin: 0;
+	padding: 0;
+	display: flex;  
+    justify-content: center;
+}
+.question {
+	letter-spacing: 1px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 30px;
+	position: relative;
+	display: flex;
+	text-align: center;
+	color: white;
+	
+}
+.answers_container {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	display: flex;  
+    justify-content: center;
+}
+.answer {
+	width: 16%;
+	height: 25px;
+	margin: 2%;
+	left:50px;
+	padding: 0;
+	text-align: center;
+	letter-spacing: 1px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 15px;
+	color: white;
+	background: #181818;
+	border-radius: 3px;
+	
+}
+</style>
+<script>
+			var counter = 0; /* stage of the 'survey' */
+			var result = 2; /* result of the 'survey' */
+			var buttons = document.querySelectorAll("div .answer"); /* contains all buttons */
+			var question_container = document.querySelector(".question"); /* contains the block, which contains current question */
+			var questions = [
+			{ question:'Ты <<вставьте слово>>?', answers:  [{answer:'Да', delta: -0.1},{answer:'Нет', delta: 0.1}] }, 
+			{ question:'Ты <<вставьте слово>>? (1)', answers: [{answer:'Да', delta: -0.1},{answer:'Нет', delta: 0},{answer:'Амлет', delta: 0.1}] }, 
+			{ question:'Ты <<вставьте слово>>? (2)', answers: [{answer:'Да', delta: -0.2},{answer:'Нет', delta: -0.1},{answer:'Не смотри сюда', delta: 0.1}
+			,{answer:'НЕПОНЕЛ?', delta:0.2}] },
+			{ question:'Ты <<вставьте слово>>? (3)', answers: [{answer:'Да', delta: -0.1},{answer:'Нет', delta: 0.1}] },
+			{ question:'Ты <<вставьте слово>>? (4)', answers: [{answer:'Да', delta: -0.1},{answer:'Нет', delta: 0.1}] },
+			{ question:'Ты <<вставьте слово>>? (5)', answers: [{answer:'Да', delta: -0.1},{answer:'Нет', delta: 0.1}] },
+			{ question:'Ты <<вставьте слово>>? (6)', answers: [{answer:'Да', delta: -0.1},{answer:'Нет', delta: 0.1}] }
+			]; /* contains the questions and delta of result */
+			var results = [
+						   'Поздравляем, вы дебил.', 
+						   'Поздравляем, вы дебил. (1)', 
+						   'Поздравляем, вы дебил. (2)', 
+						   'Поздравляем, вы дебил. (3)', 
+						   'Поздравляем, вы дебил. (4)'
+						   ]; /* contains the results of the 'survey' */
+
+						   function init(counter, buttons, question, questions, result, results) {
+						    // conditional test 'are the questions out?'
+						    if (counter > questions.length - 1) {
+						    	// finish of this suffering
+						    	alert("FINISH");
+						    } else {
+						    	// passing through this suffering
+						    	alert("START");
+						    	 document.querySelector(".question").innerHTML = questions[counter].question;
+						    	for (var i = 0; i < questions[counter].answers.length - 1; i++) buttons[i].style.display = 'block';
+						    	for (var i = 0; i < questions[counter].answers.length - 1; i++) buttons[i].innerHTML = questions[counter].answers[i].answer;
+						    	for (var i = questions[counter].answers.length - 1; i < buttons.length - 1; i++) buttons[i].style.display = 'none';
+						    }
+						   }
+
+	window.onload = function() {
+		console.log(question_container);
+		counter++;
+		init(counter, buttons, question_container, questions, result, results);
+	}
+
+</script>
+<meta charset = "UTF-8"/>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet" />
+<title>Тест</title>
+</head>
+<body>
+<section>
+  <div class = "half">
+	<div class = "question">Ты <<вставьте слово>>?</div>
+  </div>
+  </div>
+  <div class = "half">
+   <div class = "answers_container">
+	<div class = "answer">Да</div>
+	<div class = "answer">Нет</div>
+	<div class = "answer" style="display: none;">Омлет</div>
+	<div class = "answer" style="display: none;"></div>
+	<div class = "answer" style="display: none;"></div>
+	</div>
+  </div>
+</section>
+</body>
+</html>

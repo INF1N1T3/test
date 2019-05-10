@@ -86,28 +86,26 @@ section {
 					   'Поздравляем, вы дебил. (2)', 
 					   'Поздравляем, вы дебил. (3)'
 					   ];
-			var buttons_delta = new Array(questions[counter_question].answers.length - 1);
-			for (var k = 0; k < questions[counter_question].answers.length - 1; k++) {
-			buttons_delta[k] = {selector: buttons[k], delta: questions[counter_question].answers[k].delta};
-		}
-			for (var q = 0; q < buttons_delta.length - 1; q++) {
-
-			buttons_delta[q].selector.addEventListener("click", function() {
-				result = result + buttons_delta[q].delta;
-				console.log(result);
-			});
-		}
+			
+		
+			
 			for (var i = 0; i <= buttons.length - 1; i++) {
+				
 				buttons[i].addEventListener('click', function() {
 					counter_question++;
+
 					init(counter_question, question_container, questions, buttons, result, results);
 				});
+				
 			}
 		
 		
 	
 	}
+	
 	function init(counter, question_cont, questions, buttons, result, results)  {
+		var buttons_delta = [];
+		
 		if (counter > questions.length - 1) {
 			if (result < 0) {
 				result = 0;
@@ -115,17 +113,27 @@ section {
 				result = results.length - 1;
 			}
 			question_cont.innerHTML = results[Math.round(result)];
-			for (var i = 0; i <= buttons.length - 1; i++) {
-				buttons[i].style.display = 'none';
+			for (var b = 0; b <= buttons.length - 1; b++) {
+				buttons[b].style.display = 'none';
 			}
 		} 
 		else {
-			
+		for (var k = 0; k < questions[counter].answers.length; k++) {
+			buttons_delta[k] = {selector: buttons[k], delta: questions[counter].answers[k].delta};
+			console.log(buttons_delta);
+		}
+		for (var u = 0; u < buttons_delta.length - 1; u++) {
+					buttons_delta[u].selector.addEventListener("click", function() {
+					result = result + buttons_delta[u].delta;
+					console.log(result);
+					return result;
+				});
+					
+			}
 		question_cont.innerHTML = questions[counter].question;
 		for (var i = questions[counter].answers.length; i <= buttons.length - 1; i++) buttons[i].style.display = 'none';
 		for (var j = 0; j <= questions[counter].answers.length - 1; j++) buttons[j].innerHTML = questions[counter].answers[j].answer;
 		for (var a = 0; a <= questions[counter].answers.length - 1; a++) buttons[a].style.display = 'block';
-		
 	}
 	
 }
